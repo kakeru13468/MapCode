@@ -1,6 +1,14 @@
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2980b9;
+  --background-color: #ecf0f1;
+  --text-color: #2c3e50;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  font-family: "Arial", sans-serif;
+  background-color: var(--background-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,134 +19,47 @@ body {
 
 .container {
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px var(--shadow-color);
   text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.title {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.select-container {
+  margin-bottom: 20px;
 }
 
 #searchButton {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  margin-top: 20px; /* 在这里设置按钮和其他元素之间的空格 */
-}
-
-button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
+  background-color: var(--primary-color);
   color: white;
-  border-radius: 4px;
-  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
-button:hover {
-  background-color: #0056b3;
+#searchButton:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
-#result {
+.result {
   margin-top: 20px;
   font-size: 18px;
-  color: #333;
-}
-
-.old-select {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-}
-.new-select {
-  width: 300px;
-  height: 50px;
-  margin: auto;
-  margin-top: 50px;
-  text-align: center;
-  color: #444;
-  line-height: 50px;
-  position: relative;
-}
-
-.selection {
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  position: relative;
-}
-
-.new-select .selection p {
-  width: calc(100% - 60px);
-  position: relative;
-}
-
-.new-select .selection:hover p,
-.new-select .selection.open p {
-  color: #bdc3c7;
-}
-
-.new-select .selection i {
-  display: block;
-  width: 1px;
-  height: 70%;
-  position: absolute;
-  right: -1px;
-  top: 15%;
-  bottom: 15%;
-  border: none;
-  background-color: #bbb;
-}
-
-.new-select .selection > span {
-  display: block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 14px 8px 0 8px;
-  border-color: #bbb transparent transparent transparent;
-  position: absolute;
-  top: 18px;
-  right: 22px;
-}
-
-.new-select .selection.open > span {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 8px 14px 8px;
-  border-color: transparent transparent #bbb transparent;
-}
-
-.new-option {
-  text-align: center;
-  background-color: #fff;
-  cursor: pointer;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  position: relative;
-  margin-top: 1px;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: none;
-
-  transition: all 300ms ease-in-out;
-  -o-transition: all 300ms ease-in-out;
-  -ms-transition: all 300ms ease-in-out;
-  -moz-transition: all 300ms ease-in-out;
-  -webkit-transition: all 300ms ease-in-out;
-}
-
-.new-option.reveal {
-  display: block;
-}
-
-.new-option:hover {
-  background: #f1f1f1;
+  color: var(--text-color);
+  padding: 15px;
+  background-color: #f7f9fa;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }

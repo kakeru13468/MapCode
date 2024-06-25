@@ -34,93 +34,33 @@ $(document).ready(function () {
         "平成租車岡山車站前店": "19 890 747*56",
         "東橫INN 岡山站東口": "19 890 535*20",
         "後樂園/岡山城": "19 892 619*41 / 19 892 409*66"
+
     };
 
     const locationSelect = $('#locationSelect');
+    const newSelect = $('.new-select');
 
+    // 填充原始選擇器並創建自定義選項
     $.each(data, function (location, value) {
         locationSelect.append($('<option>', {
             value: location,
             text: location
         }));
+
+        newSelect.append($('<div>', {
+            class: 'new-option',
+            'data-value': location,
+            html: '<p>' + location + '</p>'
+        }));
     });
-
-    $('#searchButton').click(function () {
-        const selectedLocation = locationSelect.val();
-        const result = data[selectedLocation] || "請選擇一個地區";
-        $('#result').text(result);
-    });
-
-    var countOption = $('.old-select option').length;
-
-    function openSelect() {
-        var heightSelect = $('.new-select').height();
-        var j = 1;
-        $('.new-select .new-option').each(function () {
-            $(this).addClass('reveal');
-            $(this).css({
-                'box-shadow': '0 1px 1px rgba(0,0,0,0.1)',
-                'left': '0',
-                'right': '0',
-                'top': j * (heightSelect + 1) + 'px'
-            });
-            j++;
-        });
-    }
-
-    function closeSelect() {
-        var i = 0;
-        $('.new-select .new-option').each(function () {
-            $(this).removeClass('reveal');
-            if (i < countOption - 3) {
-                $(this).css('top', 0);
-                $(this).css('box-shadow', 'none');
-            } else if (i === countOption - 3) {
-                $(this).css('top', '3px');
-            } else if (i === countOption - 2) {
-                $(this).css({
-                    'top': '7px',
-                    'left': '2px',
-                    'right': '2px'
-                });
-            } else if (i === countOption - 1) {
-                $(this).css({
-                    'top': '11px',
-                    'left': '4px',
-                    'right': '4px'
-                });
-            }
-            i++;
-        });
-    }
 
     // 初始化顯示選中的選項
-    if ($('.old-select option[selected]').length === 1) {
-        $('.selection p span').html($('.old-select option[selected]').html());
-    } else {
-        $('.selection p span').html($('.old-select option:first-child').html());
-    }
-
-    // 將舊選單的選項添加到新的下拉選單中
-    $('.old-select option').each(function () {
-        var newValue = $(this).val();
-        var newHTML = $(this).html();
-        $('.new-select').append('<div class="new-option" data-value="' + newValue + '"><p>' + newHTML + '</p></div>');
-    });
-
-    var reverseIndex = countOption;
-    $('.new-select .new-option').each(function () {
-        $(this).css('z-index', reverseIndex);
-        reverseIndex = reverseIndex - 1;
-    });
-
-    // 初始狀態下關閉選單
-    closeSelect();
+    updateSelection($('.new-option:first').data('value'));
 
     // 點擊事件：打開或關閉選單
     $('.selection').click(function () {
         $(this).toggleClass('open');
-        if ($(this).hasClass('open') === true) {
+        if ($(this).hasClass('open')) {
             openSelect();
         } else {
             closeSelect();
@@ -130,16 +70,46 @@ $(document).ready(function () {
     // 點擊新選項時的處理
     $('.new-option').click(function () {
         var newValue = $(this).data('value');
-
-        // 更新自定義選單的顯示
-        $('.selection p span').html($(this).find('p').html());
-        $('.selection').click();
-
-        // 更新舊選單的選中狀態
-        $('.old-select option[selected]').removeAttr('selected');
-        $('.old-select option[value="' + newValue + '"]').attr('selected', 'selected');
-
-        // 同步顯示舊選單的選中狀態
-        $('.old-select').val(newValue).change();
+        updateSelection(newValue);
+        closeSelect();
     });
+
+    // 添加懸停動畫
+    $('.new-option').hover(
+        function () {
+            $(this).addClass('animate__animated animate__pulse');
+        },
+        function () {
+            $(this).removeClass('animate__animated animate__pulse');
+        }
+    );
+
+    $('#searchButton').click(function () {
+        const selectedLocation = locationSelect.val();
+        const result = data[selectedLocation] || "請選擇一個地區";
+        $('#result').removeClass('animate__fadeIn').addClass('animate__animated animate__fadeOut');
+
+        setTimeout(function () {
+            $('#result').text(result).removeClass('animate__fadeOut').addClass('animate__fadeIn');
+        }, 300);
+    });
+
+    function updateSelection(value) {
+        $('.selection p span').text(value);
+        locationSelect.val(value);
+    }
+
+    function openSelect() {
+        var heightSelect = $('.new-select').height();
+        $('.new-option').each(function (index) {
+            $(this).css({
+                'top': (index + 1) * (heightSelect + 1) + 'px',
+                'z-index': 999 - index
+            }).addClass('reveal');
+        });
+    }
+
+    function closeSelect() {
+        $('.new-option').removeClass('reveal').css('top', '');
+    }
 });

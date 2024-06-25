@@ -1,35 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Dynamic Select Menu</title>
-
+    <title>MapCode 查詢</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
-
 <body>
-    <div class="container">
-        <h1>MapCode 查詢</h1>
-        <select id="locationSelect" class="old-select">
-            <!-- Options will be dynamically generated here -->
-        </select>
-    
-        <div class="new-select">
-            <div class="selection">
-                <p>
-                    <span></span> 
-                    <i></i>
-                </p>
-            </div>
+    <div class="container animate__animated animate__fadeIn">
+        <h1 class="title">MapCode 查詢</h1>
+        <div class="select-container">
+            <select id="locationSelect">
+            </select>
         </div>
-    
-        <button id="searchButton">搜尋</button>
-        <div id="result"></div>
+        <button id="searchButton" class="animate__animated animate__pulse">搜尋</button>
+        <div id="result" class="result animate__animated"></div>
     </div>
-   
     <script src="script.js"></script>
-
 </body>
 </html>
